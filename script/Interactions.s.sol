@@ -41,7 +41,7 @@ contract CreateSubscription is Script {
 }
 
 contract FundSubscription is Script, CodeConstants {
-    uint256 public constant FUND_AMOUNT = 1 ether;
+    uint256 public constant FUND_AMOUNT = 3 ether;
 
     function run() external {
         funsSubscriptionUsingConfig();
@@ -52,7 +52,17 @@ contract FundSubscription is Script, CodeConstants {
         address vrfCoordinator = helperConfig.getConfig().vrfCoordinator;
         uint256 subscriptionId = helperConfig.getConfig().subscriptionId;
         address link = helperConfig.getConfig().link;
+        if (subscriptionId == 0) {
+            console.log(
+                "Subscription ID is not set. Running Subscription script first."
+            );
 
+            CreateSubscription createSubscription = new CreateSubscription();
+
+            subscriptionId = createSubscription.createSubscription(
+                vrfCoordinator
+            );
+        }
         fundSubscription(vrfCoordinator, subscriptionId, link);
     }
 
