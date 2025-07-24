@@ -12,7 +12,7 @@ abstract contract CodeConstants {
     /*    Chainlink VRF Coordinator V2.5 Mock constants */
     uint96 public constant BASE_FEE = 0.25 ether;
     uint96 public constant GAS_PRICE = 0.0001 ether;
-    int256 public constant WEI_PER_LINK = 4e10;
+    int256 public constant WEI_PER_LINK = 4e18;
 }
 
 contract HelperConfig is Script, CodeConstants {

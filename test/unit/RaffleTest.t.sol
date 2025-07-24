@@ -15,7 +15,7 @@ contract RaffleTest is Test {
     Raffle public raffle;
     HelperConfig public helperConfig;
 
-    uint256 public constant STARTING_BALANCE = 100 ether;
+    uint256 public constant STARTING_BALANCE = 1 ether;
 
     address public PLAYER = makeAddr("player1");
     address public PLAYER2 = makeAddr("player2");
@@ -209,6 +209,12 @@ contract RaffleTest is Test {
         VRFCoordinatorV2_5Mock(vrfCoordinator).fulfillRandomWords(
             uint256(requestId),
             address(raffle)
+        );
+        console.log("winner address: %s", raffle.getRecentWinner());
+        assert(raffle.getRaffleState() == Raffle.RaffleState.OPEN);
+        assert(
+            raffle.getRecentWinner().balance ==
+                STARTING_BALANCE + 3 * entranceFee
         );
     }
 }
