@@ -1,21 +1,28 @@
-include .env
+-include .env
 
 .PHONY: Deploy Deploy-Sepolia Coverage
 
-Deploy:
+install:
+	@forge install cyfrin/foundry-devops
+	@forge install smartcontractkit/chainlink-brownie-contracts
+	@forge install transmissions11/solmate 
+	@forge install foundry-rs/forge-std
+
+
+deploy:
 	forge script script/DeployRaffle.s.sol:DeployRaffle --rpc-url $(LOCAL_RPC_URL) \
 	--private-key $(LOCAL_PRIVATE_KEY) --broadcast -vvv
 
-Deploy-Sepolia:
-	forge script script/DeployRaffle.s.sol:DeployRaffle --rpc-url $(SEPOLIA_RPC_URL) \
+deploy-sepolia:
+	@forge script script/DeployRaffle.s.sol:DeployRaffle --rpc-url $(SEPOLIA_RPC_URL) \
 	--private-key $(SEPOLIA_PRIVATE_KEY) --broadcast \
-	--verify --etherscan-api-key $(ETHERSCAN_API_KEY) -vvv
+	--verify --verifier blockscout --verifier-url https://eth-sepolia.blockscout.com/api/ -vvv
 
-Coverage:
-	forge coverage --report debug > coverage.txt
+coverage:
+	@forge coverage --report debug > coverage.txt
 
-Test:
-	forge test --fork-url $(LOCAL_RPC_URL)
+test:
+	@forge test --fork-url $(LOCAL_RPC_URL)
 
-Test-Sepolia:
-	forge test --fork-url $(SEPOLIA_RPC_URL)
+test-sepolia:
+	@forge test --fork-url $(SEPOLIA_RPC_URL)
