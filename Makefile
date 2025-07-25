@@ -8,7 +8,8 @@ Deploy:
 
 Deploy-Sepolia:
 	forge script script/DeployRaffle.s.sol:DeployRaffle --rpc-url $(SEPOLIA_RPC_URL) \
-	--private-key $(SEPOLIA_PRIVATE_KEY) 
+	--private-key $(SEPOLIA_PRIVATE_KEY) --broadcast \
+	--verify --etherscan-api-key $(ETHERSCAN_API_KEY) -vvv
 
 Coverage:
 	forge coverage --report debug > coverage.txt

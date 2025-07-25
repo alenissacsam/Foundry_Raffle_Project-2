@@ -192,7 +192,7 @@ contract RaffleTest is Test {
 
         uint256 additionalPlayers = 3;
         for (uint256 i = 0; i < additionalPlayers; i++) {
-            address newPlayer = vm.addr(i + 1);
+            address newPlayer = address(uint160(i + 1));
             hoax(newPlayer, STARTING_BALANCE);
             raffle.enterRaffle{value: entranceFee}();
         }
@@ -210,11 +210,13 @@ contract RaffleTest is Test {
             uint256(requestId),
             address(raffle)
         );
-        console.log("winner address: %s", raffle.getRecentWinner());
         assert(raffle.getRaffleState() == Raffle.RaffleState.OPEN);
         assert(
             raffle.getRecentWinner().balance ==
                 STARTING_BALANCE + 3 * entranceFee
         );
+        assert(raffle.getLastTimeStamp() > startingTimeStamp);
+        assert(raffle.getPlayersCount() == 0);
+        assert(address(raffle).balance == 0);
     }
 }
