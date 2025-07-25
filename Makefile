@@ -16,7 +16,7 @@ deploy:
 deploy-sepolia:
 	@forge script script/DeployRaffle.s.sol:DeployRaffle --rpc-url $(SEPOLIA_RPC_URL) \
 	--private-key $(SEPOLIA_PRIVATE_KEY) --broadcast \
-	--verify --verifier blockscout --verifier-url https://eth-sepolia.blockscout.com/api/ -vvv
+	--verify --etherscan-api-key $(ETHERSCAN_API_KEY) -vvv
 
 coverage:
 	@forge coverage --report debug > coverage.txt
