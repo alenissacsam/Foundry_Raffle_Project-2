@@ -1,4 +1,4 @@
-#Foundry Smart Contract Lottery Project
+# Foundry Smart Contract Lottery Project
 
 This project implements a streamlined raffle system where users can participate by entering a specified amount of ETH. The entire pool is awarded to a single randomly selected winner. Chainlink VRF ensures provable randomness in winner selection, while Chainlink Automation streamlines and automates the process for seamless operation.
 
